@@ -1,0 +1,17 @@
+{
+    "files.associations": {
+        "btim.h": "c",
+        "adc.h": "c",
+        "task.h": "c",
+        "sys.h": "c",
+        "stmflash.h": "c",
+        "string": "c",
+        "moterdriver.h": "c",
+        "stm32f4xx_hal.h": "c",
+        "underpancontrol.h": "c",
+        "api_schedule.h": "c",
+        "mpu6050.h": "c",
+        "getadcdata.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

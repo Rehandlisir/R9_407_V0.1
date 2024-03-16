@@ -1,0 +1,221 @@
+*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'R9V1'
+compiling mpu6050.c...
+..\..\Drivers\BSP\R9\mpu6050.h(95): error:  #130: expected a "{"
+  uint8_t MPU_Init(void); 								//初始化MPU6050
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(551): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int vfscanf(FILE * __restrict /*stream*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(552): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int vscanf(const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(553): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(555): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int _vfscanf(FILE * __restrict /*stream*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(556): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int _vscanf(const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(557): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int _vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(558): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int __ARM_vsscanf(const char * __restrict /*s*/, const char * __restrict /*format*/, __va_list) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(560): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int vprintf(const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(568): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int _vprintf(const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(575): error:  #20: identifier "__va_list" is undefined
+                      const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(585): error:  #20: identifier "__va_list" is undefined
+                       const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(595): error:  #20: identifier "__va_list" is undefined
+                       const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(598): error:  #20: identifier "__va_list" is undefined
+                       const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(610): error:  #20: identifier "__va_list" is undefined
+                        const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(617): error:  #20: identifier "__va_list" is undefined
+                       const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(624): error:  #20: identifier "__va_list" is undefined
+                        const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(3)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(633): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(637): error:  #20: identifier "__va_list" is undefined
+  extern _ARMABI int __ARM_vasprintf(char ** /*strp*/, const char * __restrict /*format*/, __va_list /*arg*/) __attribute__((__nonnull__(2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(822): error:  #757: variable "fpos_t"  is not a type name
+  extern _ARMABI int fgetpos(FILE * __restrict /*stream*/, fpos_t * __restrict /*pos*/) __attribute__((__nonnull__(1,2)));
+C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h(850): error:  #757: variable "fpos_t"  is not a type name
+  extern _ARMABI int fsetpos(FILE * __restrict /*stream*/, const fpos_t * __restrict /*pos*/) __attribute__((__nonnull__(1,2)));
+..\..\Drivers\BSP\R9\mpu6050.c(15): warning:  #223-D: function "MPU_Write_Byte" declared implicitly
+  	MPU_Write_Byte(MPU_PWR_MGMT1_REG,0X80);	//复位MPU6050
+..\..\Drivers\BSP\R9\mpu6050.c(16): warning:  #223-D: function "delay_ms" declared implicitly
+      delay_ms(100);
+..\..\Drivers\BSP\R9\mpu6050.c(18): warning:  #223-D: function "MPU_Set_Gyro_Fsr" declared implicitly
+  	MPU_Set_Gyro_Fsr(3);					//陀螺仪传感器,±2000dps
+..\..\Drivers\BSP\R9\mpu6050.c(19): warning:  #223-D: function "MPU_Set_Accel_Fsr" declared implicitly
+  	MPU_Set_Accel_Fsr(0);					//加速度传感器,±2g
+..\..\Drivers\BSP\R9\mpu6050.c(20): warning:  #223-D: function "MPU_Set_Rate" declared implicitly
+  	MPU_Set_Rate(50);						//设置采样率50Hz
+..\..\Drivers\BSP\R9\mpu6050.c(25): warning:  #223-D: function "MPU_Read_Byte" declared implicitly
+  	res=MPU_Read_Byte(MPU_DEVICE_ID_REG);
+..\..\Drivers\BSP\R9\mpu6050.c(38): error:  #159: declaration is incompatible with previous "MPU_Set_Gyro_Fsr"  (declared at line 18)
+  uint8_t MPU_Set_Gyro_Fsr(uint8_t fsr)
+..\..\Drivers\BSP\R9\mpu6050.c(40): warning:  #223-D: function "MPU_Write_Byte" declared implicitly
+  	return MPU_Write_Byte(MPU_GYRO_CFG_REG,fsr<<3);//设置陀螺仪满量程范围  
+..\..\Drivers\BSP\R9\mpu6050.c(46): error:  #159: declaration is incompatible with previous "MPU_Set_Accel_Fsr"  (declared at line 19)
+  uint8_t MPU_Set_Accel_Fsr(uint8_t fsr)
+..\..\Drivers\BSP\R9\mpu6050.c(48): warning:  #223-D: function "MPU_Write_Byte" declared implicitly
+  	return MPU_Write_Byte(MPU_ACCEL_CFG_REG,fsr<<3);//设置加速度传感器满量程范围  
+..\..\Drivers\BSP\R9\mpu6050.c(63): warning:  #223-D: function "MPU_Write_Byte" declared implicitly
+  	return MPU_Write_Byte(MPU_CFG_REG,data);//设置数字低通滤波器  
+..\..\Drivers\BSP\R9\mpu6050.c(69): error:  #159: declaration is incompatible with previous "MPU_Set_Rate"  (declared at line 20)
+  uint8_t MPU_Set_Rate(uint16_t rate)
+..\..\Drivers\BSP\R9\mpu6050.c(75): warning:  #223-D: function "MPU_Write_Byte" declared implicitly
+  	data=MPU_Write_Byte(MPU_SAMPLE_RATE_REG,data);	//设置数字低通滤波器
+..\..\Drivers\BSP\R9\mpu6050.c(86): warning:  #223-D: function "MPU_Read_Len" declared implicitly
+  	MPU_Read_Len(MPU_ADDR,MPU_TEMP_OUTH_REG,2,buf); 
+..\..\Drivers\BSP\R9\mpu6050.c(98): warning:  #223-D: function "MPU_Read_Len" declared implicitly
+  	res=MPU_Read_Len(MPU_ADDR,MPU_GYRO_XOUTH_REG,6,buf);
+..\..\Drivers\BSP\R9\mpu6050.c(114): warning:  #223-D: function "MPU_Read_Len" declared implicitly
+  	res=MPU_Read_Len(MPU_ADDR,MPU_ACCEL_XOUTH_REG,6,buf);
+..\..\Drivers\BSP\R9\mpu6050.c(161): error:  #159: declaration is incompatible with previous "MPU_Read_Len"  (declared at line 86)
+  uint8_t MPU_Read_Len(uint8_t addr,uint8_t reg,uint8_t len,uint8_t *buf)
+..\..\Drivers\BSP\R9\mpu6050.c(190): error:  #159: declaration is incompatible with previous "MPU_Write_Byte"  (declared at line 15)
+  uint8_t MPU_Write_Byte(uint8_t reg,uint8_t data) 				 
+..\..\Drivers\BSP\R9\mpu6050.c(213): error:  #159: declaration is incompatible with previous "MPU_Read_Byte"  (declared at line 25)
+  uint8_t MPU_Read_Byte(uint8_t reg)
+..\..\Drivers\BSP\R9\mpu6050.c: 13 warnings, 27 errors
+compiling main.c...
+..\..\Drivers\./BSP/R9/underpanControl.h(64): warning:  #1295-D: Deprecated declaration velocity_plan - give arg types
+  void velocity_plan();	
+..\..\Drivers\./BSP/R9/moterdriver.h(68): warning:  #9-D: nested comment is not allowed
+  /* // /*********************************搴曠洏鐢垫満椹卞姩杈撳嚭 鍙? 鎺ㄦ潌鐢垫満 椹卞姩杈撳嚭  *************************************/
+..\..\Drivers\./BSP/R9/mpu6050.h(95): error:  #130: expected a "{"
+  uint8_t MPU_Init(void); 								//初始化MPU6050
+..\..\User\main.c(24): warning:  #12-D: parsing restarts here after previous syntax error
+  {
+..\..\User\main.c(26): warning:  #223-D: function "Hard_devInit" declared implicitly
+  	Hard_devInit();
+..\..\User\main.c(31): warning:  #940-D: missing return statement at end of non-void function "iic_read_byte" 
+  }
+..\..\User\main.c: 5 warnings, 1 error
+compiling API_Schedule.c...
+..\..\Drivers\./BSP/R9/underpanControl.h(64): warning:  #1295-D: Deprecated declaration velocity_plan - give arg types
+  void velocity_plan();	
+..\..\Drivers\./BSP/R9/moterdriver.h(68): warning:  #9-D: nested comment is not allowed
+  /* // /*********************************搴曠洏鐢垫満椹卞姩杈撳嚭 鍙? 鎺ㄦ潌鐢垫満 椹卞姩杈撳嚭  *************************************/
+..\..\Drivers\./BSP/R9/mpu6050.h(95): error:  #130: expected a "{"
+  uint8_t MPU_Init(void); 								//初始化MPU6050
+..\..\Drivers\BSP\API_Schedule.c(6): warning:  #12-D: parsing restarts here after previous syntax error
+  {
+..\..\Drivers\BSP\API_Schedule.c(7): warning:  #174-D: expression has no effect
+       { 0,       1,              0,           linearactuatorDrive},
+..\..\Drivers\BSP\API_Schedule.c(7): warning:  #174-D: expression has no effect
+       { 0,       1,              0,           linearactuatorDrive},
+..\..\Drivers\BSP\API_Schedule.c(7): error:  #20: identifier "linearactuatorDrive" is undefined
+       { 0,       1,              0,           linearactuatorDrive},
+..\..\Drivers\BSP\API_Schedule.c(7): warning:  #174-D: expression has no effect
+       { 0,       1,              0,           linearactuatorDrive},
+..\..\Drivers\BSP\API_Schedule.c(7): error:  #65: expected a ";"
+       { 0,       1,              0,           linearactuatorDrive},
+..\..\Drivers\BSP\API_Schedule.c(7): error:  #29: expected an expression
+       { 0,       1,              0,           linearactuatorDrive},
+..\..\Drivers\BSP\API_Schedule.c(13): warning:  #12-D: parsing restarts here after previous syntax error
+  };
+..\..\Drivers\BSP\API_Schedule.c(13): error:  #65: expected a ";"
+  };
+..\..\Drivers\BSP\API_Schedule.c(13): warning:  #940-D: missing return statement at end of non-void function "iic_read_byte" 
+  };
+..\..\Drivers\BSP\API_Schedule.c(18): error:  #70: incomplete type is not allowed
+  uint8_t TaskCount=	sizeof(TaskST)/sizeof(TaskST[0]);	
+..\..\Drivers\BSP\API_Schedule.c: 8 warnings, 6 errors
+compiling myiic.c...
+..\..\Drivers\./SYSTEM/delay/delay.h(32): error:  #130: expected a "{"
+  void delay_init(uint16_t sysclk);           /* 初始化延迟函数 */
+..\..\Drivers\BSP\R9\myiic.c(23): warning:  #12-D: parsing restarts here after previous syntax error
+  {
+..\..\Drivers\BSP\R9\myiic.c(48): warning:  #940-D: missing return statement at end of non-void function "iic_read_byte" 
+  }
+..\..\Drivers\BSP\R9\myiic.c(57): warning:  #223-D: function "delay_us" declared implicitly
+      delay_us(2);    /* 2us的延时, 读写速度在250Khz以内 */
+..\..\Drivers\BSP\R9\myiic.c(182): error:  #247: function "iic_read_byte"  has already been defined
+  uint8_t iic_read_byte(uint8_t ack)
+..\..\Drivers\BSP\R9\myiic.c: 3 warnings, 2 errors
+compiling task.c...
+..\..\Drivers\./BSP/R9/underpanControl.h(64): warning:  #1295-D: Deprecated declaration velocity_plan - give arg types
+  void velocity_plan();	
+..\..\Drivers\./BSP/R9/moterdriver.h(68): warning:  #9-D: nested comment is not allowed
+  /* // /*********************************搴曠洏鐢垫満椹卞姩杈撳嚭 鍙? 鎺ㄦ潌鐢垫満 椹卞姩杈撳嚭  *************************************/
+..\..\Drivers\./BSP/R9/mpu6050.h(95): error:  #130: expected a "{"
+  uint8_t MPU_Init(void); 								//初始化MPU6050
+..\..\Drivers\BSP\task.c(32): warning:  #12-D: parsing restarts here after previous syntax error
+  {
+..\..\Drivers\BSP\task.c(54): warning:  #223-D: function "MPU_Init" declared implicitly
+  	MPU_Init();
+..\..\Drivers\BSP\task.c(55): warning:  #940-D: missing return statement at end of non-void function "iic_read_byte" 
+  }
+..\..\Drivers\BSP\task.c(64): error:  #20: identifier "velocity_pout" is undefined
+  	if (velocity_pout.runstate == backward || velocity_pout.runstate == back_left || velocity_pout.runstate == back_right)
+..\..\Drivers\BSP\task.c(103): error:  #20: identifier "adcdata" is undefined
+  	if (adcdata.adc_x > 0)
+..\..\Drivers\BSP\task.c(105): error:  #20: identifier "velPlanIn1" is undefined
+  		velPlanIn1.adcx = adcdata.adc_x - xadc_Dim;
+..\..\Drivers\BSP\task.c(109): error:  #20: identifier "velPlanIn1" is undefined
+  		velPlanIn1.adcx = adcdata.adc_x + xadc_Dim;
+..\..\Drivers\BSP\task.c(113): error:  #20: identifier "velPlanIn1" is undefined
+  		velPlanIn1.adcx = 0;
+..\..\Drivers\BSP\task.c(116): error:  #20: identifier "velPlanIn1" is undefined
+  	velPlanIn1.adcx = slopelimitx( velPlanIn1.adcx,25);  
+..\..\Drivers\BSP\task.c(119): error:  #20: identifier "adcdata" is undefined
+  	if (adcdata.adc_y > 0)	
+..\..\Drivers\BSP\task.c(137): error:  #20: identifier "velocity_pout" is undefined
+  	rpwmvaAl = 100 * (1.0 - velocity_pout.A_IN1);
+..\..\Drivers\BSP\task.c(142): error:  #20: identifier "g_time5_pwm_chy_handle" is undefined
+  	__HAL_TIM_SET_COMPARE(&g_time5_pwm_chy_handle, GTIM_TIM5_PWM_CH1, rpwmvaAl);
+..\..\Drivers\BSP\task.c(144): error:  #20: identifier "g_time9_pwm_chy_handle" is undefined
+  	__HAL_TIM_SET_COMPARE(&g_time9_pwm_chy_handle, GTIM_TIM9_PWM_CH1, rpwmvaBl);
+..\..\Drivers\BSP\task.c(177): error:  #20: identifier "g_time1_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+..\..\Drivers\BSP\task.c(180): error:  #20: identifier "g_time8_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+..\..\Drivers\BSP\task.c(185): error:  #20: identifier "g_time4_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+..\..\Drivers\BSP\task.c(190): error:  #20: identifier "g_time12_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
+..\..\Drivers\BSP\task.c(209): error:  #20: identifier "g_time1_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+..\..\Drivers\BSP\task.c(212): error:  #20: identifier "g_time8_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+..\..\Drivers\BSP\task.c(217): error:  #20: identifier "g_time4_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+..\..\Drivers\BSP\task.c(222): error:  #20: identifier "g_time12_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
+..\..\Drivers\BSP\task.c(239): error:  #20: identifier "g_time1_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+..\..\Drivers\BSP\task.c(242): error:  #20: identifier "g_time8_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+..\..\Drivers\BSP\task.c(247): error:  #20: identifier "g_time4_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+..\..\Drivers\BSP\task.c(252): error:  #20: identifier "g_time12_pwm_chy_handle" is undefined
+  			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
+..\..\Drivers\BSP\task.c(263): error:  #20: identifier "Temperature" is undefined
+  	Temperature =  MPU_Get_Temperature();
+..\..\Drivers\BSP\task.c(263): warning:  #223-D: function "MPU_Get_Temperature" declared implicitly
+  	Temperature =  MPU_Get_Temperature();
+..\..\Drivers\BSP\task.c(264): warning:  #223-D: function "MPU_Get_Gyroscope" declared implicitly
+  	MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);
+..\..\Drivers\BSP\task.c(264): error:  #20: identifier "gyrox" is undefined
+  	MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);
+..\..\Drivers\BSP\task.c(264): error:  #20: identifier "gyroy" is undefined
+  	MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);
+..\..\Drivers\BSP\task.c(264): error:  #20: identifier "gyroz" is undefined
+  	MPU_Get_Gyroscope(&gyrox,&gyroy,&gyroz);
+..\..\Drivers\BSP\task.c(265): warning:  #223-D: function "MPU_Get_Accelerometer" declared implicitly
+  	MPU_Get_Accelerometer(&aacx,&aacy,&aacz);
+..\..\Drivers\BSP\task.c(265): error:  #20: identifier "aacx" is undefined
+  	MPU_Get_Accelerometer(&aacx,&aacy,&aacz);
+..\..\Drivers\BSP\task.c(265): error:  #20: identifier "aacy" is undefined
+  	MPU_Get_Accelerometer(&aacx,&aacy,&aacz);
+..\..\Drivers\BSP\task.c(265): error:  #20: identifier "aacz" is undefined
+  	MPU_Get_Accelerometer(&aacx,&aacy,&aacz);
+..\..\Drivers\BSP\task.c: 8 warnings, 30 errors
+"..\..\Output\atk_f407.axf" - 66 Error(s), 37 Warning(s).
+Target not created.
+Build Time Elapsed:  00:00:11
