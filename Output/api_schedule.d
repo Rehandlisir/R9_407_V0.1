@@ -86,3 +86,4 @@
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/myiic.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/inv_mpu.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/inv_mpu_dmp_motion_driver.h
+..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/rs485.h

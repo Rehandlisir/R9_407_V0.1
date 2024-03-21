@@ -86,3 +86,4 @@
 ..\..\output\main.o: ..\..\Drivers\./BSP/R9/myiic.h
 ..\..\output\main.o: ..\..\Drivers\./BSP/R9/inv_mpu.h
 ..\..\output\main.o: ..\..\Drivers\./BSP/R9/inv_mpu_dmp_motion_driver.h
+..\..\output\main.o: ..\..\Drivers\./BSP/R9/rs485.h

@@ -545,6 +545,11 @@
               <FileType>1</FileType>
               <FilePath>..\..\Drivers\BSP\R9\inv_mpu_dmp_motion_driver.c</FilePath>
             </File>
+            <File>
+              <FileName>rs485.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\Drivers\BSP\R9\rs485.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

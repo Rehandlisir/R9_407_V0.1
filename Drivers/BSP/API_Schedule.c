@@ -9,7 +9,9 @@ struct TaskStruct TaskST[]=
 	 { 0,       3,              0,                   UnderpanDrive},
    	 { 0,       4,              0,                GetADC_AllData},
 	 { 0,       200,            0,		  	           LedFlash},
-	 { 0,       500,            0,                      Beep_run}
+	 { 0,       500,            0,                      Beep_run},
+	 { 0,       500,            0,                      DypA21},
+	 
 };
 
 /*******************************搭建时间片轮询机制代码框架  ********************************/

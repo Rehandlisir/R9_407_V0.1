@@ -20,6 +20,10 @@ short gyrox,gyroy,gyroz ;
 short aacx,aacy,aacz ;
 float pitch,roll,yaw; 			//欧拉角
 
+uint8_t rs485buf[8] = {ID,READ,REGISTERADRR1,REGISTERADRR2,REGISTERnum1,REGISTERnum2,CHECK1,CHECK2}; /*485发指令*/
+
+extern uint8_t g_RS485_rx_buf[RS485_REC_LEN];
+
 
 /*************************电机驱动变量*****************************/
 extern TIM_HandleTypeDef g_time5_pwm_chy_handle ;  /* 底盘L电机 1 函数句柄*/
@@ -53,8 +57,9 @@ void Hard_devInit(void)
 	dcurrentpro_init();                     /*过流保护初始化*/
 	tcurrentpro_init();
 	getadcDataInit();                      /*ADC数据采集初始化*/
-	MPU_Init();
+	MPU_Init();                            /*陀螺仪初始化*/
 	mpu_dmp_init();
+	rs485_init(115200);                    /*超声波测距*/
 }
 
 void LedFlash(void)
@@ -68,10 +73,10 @@ void Beep_run(void)
 	{
 		BEEP_TOGGLE();
 	}
-	else
-	{
-		BEEP(0);
-	}
+	// else
+	// {
+	// 	BEEP(0);
+	// }
 }
 /* 针对 R9系统的所有ADC 数据采集 ，
  *  一 、ADC1 采集7通道数据 包含   
@@ -91,7 +96,7 @@ void GetADC_AllData(void)
 	// printf("%d,%d,%d,%d,%d,%d\n",adcdata.adc_x,adcdata.adc_y,adcdata.l_brakcurrent,adcdata.r_brakcurrent,adcdata.l_current,adcdata.r_current);
 	//  printf("%d,%d,%d,%d,%d,%d\n",adcdata.lift_pos,adcdata.pedestal_pos,adcdata.backboard_pos,adcdata.legangle_pos,adcdata.leglength_pos,adcdata.support_pos);
 	//  printf("%d,%d,%d,%d,%d,%d\n",adcdata.lift_current,adcdata.pedestal_current,adcdata.backboard_current,adcdata.legangle_current,adcdata.leglength_current,adcdata.support_current);
-	 printf("%d\n",adcdata.lift_pos);
+//	 printf("adcdata.lift_current : %d\n",adcdata.lift_current);
 }
 
 
@@ -269,6 +274,18 @@ void gyroscopeData(void)
 //    printf("%d,%d,%d,%d,%d,%d,%d\n",Temperature,gyrox,gyroy,gyroz,aacx,aacy,aacz);
 //	res=MPU_Read_Byte(MPU_DEVICE_ID_REG);
 //	printf("%d\n",res);
-	mpu_dmp_get_data(&pitch,&roll,&yaw);
-//	printf("pitch:%f,roll:%f,yaw:%f\n",pitch,roll,yaw);
+	
+	
+	mpu_dmp_get_data(&pitch,&roll,&yaw);       
+//	printf("roll:%f,pitch:%f,yaw:%f\n",roll,pitch,yaw); 
+		    
+
+}
+
+void DypA21 (void)
+{
+	uint16_t length;
+    rs485_send_data(rs485buf, 8);   /* 发送8个字节 */
+    length = g_RS485_rx_buf[3]*256 +g_RS485_rx_buf[4]; // 接受到的数据
+	printf("Distance:%d\n",length);	
 }
