@@ -94,7 +94,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 
 	 	OS_IT_RUN();
 		
-		// Modbus 从机
+//		Modbus 从机
 		if(slavemodbus.timrun != 0)//运行时间！=0表明
 		 {
 		  slavemodbus.timout++;
@@ -103,29 +103,28 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		   slavemodbus.timrun = 0;
 			 slavemodbus.reflag = 1;//接收数据完毕
 		  }
-			
+			  
 		 }
 	
-		// Modbus 主机
-		if(hostmodbus.timrun != 0)//运行时间！=0表明
+//		Modbus 主机
+		if(modbus.timrun != 0)//运行时间！=0表明
 		 {
-		  hostmodbus.timout++;
-		  if(hostmodbus.timout >=8)
+		  modbus.timout++;
+		  if(modbus.timout >=8)
 		  {
-		   hostmodbus.timrun = 0;
-			 hostmodbus.reflag = 1;//接收数据完毕
+		   modbus.timrun = 0;
+			 modbus.reflag = 1;//接收数据完毕
 		  }
 			
-		 }		 
-		
-		 hostmodbus.Host_Sendtime++;//发送完上一帧后的时间计数
+		 }
 		 
-		if(hostmodbus.Host_Sendtime>100)//距离发送上一帧数据1s了
+		 modbus.Host_Sendtime++;//发送完上一帧后的时间计数
+		 
+		if(modbus.Host_Sendtime>50)//距离发送上一帧数据1s了
 			{
 				//1s时间到
-				hostmodbus.Host_time_flag=1;//发送数据标志位置1
+				modbus.Host_time_flag=1;//发送数据标志位置1
 				
-			}		
-	
+			}
     }
 }

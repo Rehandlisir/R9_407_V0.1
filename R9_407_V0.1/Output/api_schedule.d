@@ -77,6 +77,9 @@
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/BEEP/beep.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/underpanControl.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/moterdriver.h
+..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/Hostmodbus.h
+..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/Slavemodbus.h
+..\..\output\api_schedule.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/brake.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/TIMER/btim.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/Common/common.h
@@ -88,5 +91,4 @@
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/inv_mpu_dmp_motion_driver.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/rs485.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/mlx90393.h
-..\..\output\api_schedule.o: ..\..\Drivers\./BSP/R9/Slavemodbus.h
 ..\..\output\api_schedule.o: ..\..\Drivers\./BSP/WDG/wdg.h

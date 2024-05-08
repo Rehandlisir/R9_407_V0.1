@@ -18,7 +18,7 @@ VELOCITY_PIn  velPlanIn1;
 short  Temperature;
 short gyrox,gyroy,gyroz ;
 short aacx,aacy,aacz ;
-float pitch,roll,yaw; 			//欧拉角
+float pitch,roll,yaw;  			//欧拉角
 
 //uint8_t rs485buf[8] = {ID,READ,REGISTERADRR1,REGISTERADRR2,REGISTERnum1,REGISTERnum2,CHECK1,CHECK2}; /*485发指令*/
 
@@ -26,27 +26,12 @@ float pitch,roll,yaw; 			//欧拉角
 //extern uint8_t g_RS485_rx_cnt;
 
 extern MLX90393Data mlxdata;
-
-
-/*************************电机驱动变量*****************************/
-extern TIM_HandleTypeDef g_time5_pwm_chy_handle ;  /* 底盘L电机 1 函数句柄*/
-extern TIM_HandleTypeDef g_time9_pwm_chy_handle ;  /* 底盘R电机 2 函数句柄*/
-extern TIM_HandleTypeDef g_time1_pwm_chy_handle ;  /* 推杆1 （举升）  TIME1 函数句柄*/
-extern TIM_HandleTypeDef g_time8_pwm_chy_handle ;  /* 推杆2 （座板）    推杆3 （靠背） TIME8 函数句柄*/
-extern TIM_HandleTypeDef g_time4_pwm_chy_handle ;  /* 推杆4 （脚踏旋转） 推杆5 （脚踏伸长）TIME1 函数句柄*/
-extern TIM_HandleTypeDef g_time12_pwm_chy_handle ;  /*推杆6 （前支撑轮） TIME12 函数句柄*/
-
 /*************************主任务列表*****************************/
 void Hard_devInit(void)
 {
 	
 	HAL_Init();                                 //* 初始化HAl库 */
-    MoterL_pwm_chy_init(100 - 1, 42 - 1);    //* 84 000 000 / 100*42      L 20khz频率的PWM 波形*  /  
-	MoterR_pwm_chy_init(200 - 1, 42 - 1);    //* 168 000 000 / 200*42     R  20khz频率的PWM 波形*/
-	MoterLift_pwm_chy_init(200 - 1, 42 - 1);    //* 168 000 000 / 200*42     T1  20khz频率的PWM 波形*/
-	MoterPedestal_Backboard_pwm_chy_init(200 - 1, 42 - 1);//                   T2&T3
-	MoterLeg_pwm_chy_init(100 - 1, 42 - 1);               //                   T4&T5
-    MoterSupport_pwm_chy_init(100 - 1, 42 - 1);   //* 84 000 000 / 100*42      T6  20khz频率的PWM 波形*  /  
+	MoterdriveInit();
     sys_stm32_clock_init(336, 8, 2, 7);     /* 初始化时钟频率,168Mhz 主时钟*/
     delay_init(168);                        /*初始化延时时钟频率*/
     usart_init(115200);                     /* 串口通讯波特率 115200 */
@@ -57,20 +42,20 @@ void Hard_devInit(void)
 	btim_timx_int_init(10 - 1, 8400 - 1);   /*定时器中断初始化 产生固定 1ms 的定时器中断 */
     brake_init();                           /*抱闸初始化*/   
     beep_init();                            /*蜂鸣器初始化*/
-	dcurrentpro_init();                     /*过流保护初始化*/
-	tcurrentpro_init();
+	currentproInit();
 	getadcDataInit();                      /*ADC数据采集初始化*/
 	MPU_Init();                            /*陀螺仪初始化*/
 	mpu_dmp_init();
 //	rs485_init(115200);                    /*超声波测距*/
-    SlaveModbus_Init();
+    //SlaveModbus_Init();                  /*与RK3588作为从机通讯*/
 
-	vSetUpMlx90393();
+	 Host_Modbuskey_Init();
+	//vSetUpMlx90393();
 	iwdg_init(IWDG_PRESCALER_64, 500);      /* 预分频数为64,重载值为500,溢出时间约为1s */
 	
 	//printf("IWDG溢出\n");
 	
-	Reg[0] = 0x68;
+	//Reg[0] = 0x68;
 }
 
 void LedFlash(void)
@@ -104,7 +89,7 @@ void Beep_run(void)
 void GetADC_AllData(void)
 {
 	getadcData();
-	// printf("%d,%d,%d,%d,%d,%d\n",adcdata.adc_x,adcdata.adc_y,adcdata.l_brakcurrent,adcdata.r_brakcurrent,adcdata.l_current,adcdata.r_current);
+   // printf("%d\t\n",adcdata.lift_pos);
 	//  printf("%d,%d,%d,%d,%d,%d\n",adcdata.lift_pos,adcdata.pedestal_pos,adcdata.backboard_pos,adcdata.legangle_pos,adcdata.leglength_pos,adcdata.support_pos);
 	//  printf("%d,%d,%d,%d,%d,%d\n",adcdata.lift_current,adcdata.pedestal_current,adcdata.backboard_current,adcdata.legangle_current,adcdata.leglength_current,adcdata.support_current);
 	//  printf("adcdata.l_current :%d, adcdata.r_current %d\n",adcdata.l_current,adcdata.r_current);
@@ -169,116 +154,10 @@ void UnderpanDrive(void)
 	//printf("%d,%d,%d,%d\r\n",rpwmvaAl,rpwmvaA2, rpwmvaBl,rpwmvaB2);	
 }
 
+
 void linearactuatorDrive(void)
- {
-		uint16_t T1_IN1 = 0;
-		uint16_t T1_IN2 = 0;
-		uint16_t T2_IN1 = 0;
-		uint16_t T2_IN2 = 0;
-		uint16_t T3_IN1 = 0;
-		uint16_t T3_IN2 = 0;
-		uint16_t T4_IN1 = 0;
-		uint16_t T4_IN2 = 0;
-		uint16_t T5_IN1 = 0;
-		uint16_t T5_IN2 = 0;
-		uint16_t T6_IN1 = 0;
-		uint16_t T6_IN2 = 0;	
-
-        if (key_scan5() == 1) 
-		{
-			T1_IN1 = 200 * (1.0 - 0);
-			T1_IN2 = 200 * (1.0 - 0.7);	
-			T2_IN1 = 200 * (1.0 - 0);
-			T2_IN2 = 200 * (1.0 - 0.7);	
-			T3_IN1 = 200 * (1.0 - 0);
-			T3_IN2 = 200 * (1.0 - 0.7);	
-			T4_IN1 = 100 * (1.0 - 0);
-			T4_IN2 = 100 * (1.0 - 0.7);	
-			T5_IN1 = 100 * (1.0 - 0);
-			T5_IN2 = 100 * (1.0 - 0.7);	
-			T6_IN1 = 100 * (1.0 - 0);
-			T6_IN2 = 100 * (1.0 - 0.7);	
-			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
-
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
-
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
-
-			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH2, T6_IN2);
-
-		}
-
-		else if (key_scan1() == 1)
-		{
-			T1_IN2 = 200 * (1.0 - 0);
-			T1_IN1 = 200 * (1.0 - 0.7);	
-			T2_IN2 = 200 * (1.0 - 0);
-			T2_IN1 = 200 * (1.0 - 0.7);	
-			T3_IN2 = 200 * (1.0 - 0);
-			T3_IN1 = 200 * (1.0 - 0.7);	
-			T4_IN2 = 100 * (1.0 - 0);
-			T4_IN1 = 100 * (1.0 - 0.7);	
-			T5_IN2 = 100 * (1.0 - 0);
-			T5_IN1 = 100 * (1.0 - 0.7);	
-			T6_IN2 = 100 * (1.0 - 0);
-			T6_IN1 = 100 * (1.0 - 0.7);		
-			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
-
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
-
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
-
-			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH2, T6_IN2);
-		}	
-        else if (key_scan1() == 0 && key_scan5() == 0)
-		{
-			T1_IN1 = 200 * (1.0 - 0);
-			T1_IN2 = 200 * (1.0 - 0);	
-			T2_IN1 = 200 * (1.0 - 0);
-			T2_IN2 = 200 * (1.0 - 0);	
-			T3_IN1 = 200 * (1.0 - 0);
-			T3_IN2 = 200 * (1.0 - 0);	
-			T4_IN1 = 100 * (1.0 - 0);
-			T4_IN2 = 100 * (1.0 - 0);	
-			T5_IN1 = 100 * (1.0 - 0);
-			T5_IN2 = 100 * (1.0 - 0);	
-			T6_IN1 = 100 * (1.0 - 0);
-			T6_IN2 = 100 * (1.0 - 0);	   
-			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
-
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
-
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
-
-			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
-			__HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH2, T6_IN2);
-	
-		}
-		
-	    	
+ {	
+	linearactuatorTest(); 	
  }
 
 void gyroscopeData(void)
@@ -312,19 +191,42 @@ void DypA21 (void)
 //    dyplength = ((*((uint8_t *)buf+ 1)<< 8))| *(uint8_t *)buf;
 //	printf("%d,%d\r\n",dyplength,g_RS485_rx_cnt);	
 	
-	SlaveModbus_Event();//Modbus事件处理函数(执行读或者写的判断)--从机地址01
-	
-	
-	
+	//SlaveModbus_Event();//Modbus事件处理函数(执行读或者写的判断)--从机地址01
+	if(modbus.Host_time_flag)//每1s发送一次数据
+		{
+				
+			
+			//01-读取从机数据测试
+			//参数1：查看第i个从机数据
+			Host_Read03_slave(0x11,0x0000,0x000B);//参数1从机地址，参数2起始地址，参数3寄存器个数
+			if(modbus.Host_send_flag)
+			{
+				modbus.Host_Sendtime=0;//发送完毕后计数清零（距离上次的时间）
+				modbus.Host_time_flag=0;//发送数据标志位清零
+				modbus.Host_send_flag=0;//清空发送结束数据标志位
+
+				HOST_ModbusRX();//接收数据进行处理
+			}	
+	}
+
+	printf("%d ,%d,%d,%d,%d,%d,%d,%d,%d,%d,%d\r\n",KeyStateRecive[0],KeyStateRecive[1],KeyStateRecive[2],KeyStateRecive[3],KeyStateRecive[4],KeyStateRecive[5],KeyStateRecive[6],KeyStateRecive[7],KeyStateRecive[8],KeyStateRecive[9],KeyStateRecive[10]);
 }
 void Tmxl90393(void)    
 {
-	int32_t mlx_xdata,mlx_ydata;
-	vInMeasurementNormal();
-	// // printf("ucMlx90393ErroType:%d\n  Xdata:%d\n Ydata:%d\n Xbase:%d\n Ybase:%d\n",mlxdata.ucMlx90393ErroType,mlxdata.xdata-16800,mlxdata.ydata-16500,mlxdata.basex,mlxdata.basey);
-	mlx_xdata = mlxdata.xdata-16800;
-	mlx_ydata = mlxdata.ydata-16500;  
+	// int32_t mlx_xdata,mlx_ydata;
+	// vInMeasurementNormal();
+	// // // printf("ucMlx90393ErroType:%d\n  Xdata:%d\n Ydata:%d\n Xbase:%d\n Ybase:%d\n",mlxdata.ucMlx90393ErroType,mlxdata.xdata-16800,mlxdata.ydata-16500,mlxdata.basex,mlxdata.basey);
+	// mlx_xdata = mlxdata.xdata-16800;
+	// mlx_ydata = mlxdata.ydata-16500;  
 	// printf("%d,%d\r\n",mlx_xdata,mlx_ydata);
+	Host_write06_slave(0x11,0x06,0x0091,0X02);
+	if(modbus.Host_send_flag)
+	{
+		modbus.Host_Sendtime=0;//发送完毕后计数清零（距离上次的时间）
+		modbus.Host_time_flag=0;//发送数据标志位清零
+		modbus.Host_send_flag=0;//清空发送结束数据标志位
+		Host_Func6();//从机返回数据处理
+	}  
 }
 
 

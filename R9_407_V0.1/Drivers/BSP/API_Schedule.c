@@ -6,12 +6,12 @@ struct TaskStruct TaskST[]=
 {
      { 0,       1,              0,           linearactuatorDrive},
      { 0,       2,              0,           gyroscopeData},
-	 { 0,       3,              0,                   UnderpanDrive},
+	 { 0,       5,              0,                   UnderpanDrive},
    	 { 0,       4,              0,                GetADC_AllData},
 	 { 0,       300,            0,		  	           LedFlash},
 	 { 0,       500,            0,                      Beep_run},
-	 { 0,       1,            0,                      DypA21}, // 150 ms 运行稳定
-	 { 0,       10,              0,                      Tmxl90393},
+	 { 0,       2,            0,                      DypA21}, // 150 ms 运行稳定
+	 { 0,       100,              0,                      Tmxl90393},
 	 
 };
 

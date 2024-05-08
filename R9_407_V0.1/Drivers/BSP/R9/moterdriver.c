@@ -40,6 +40,7 @@ TIM_HandleTypeDef g_time1_pwm_chy_handle ;  /* 推杆1 （举升）  TIME1 函数句柄*/
 TIM_HandleTypeDef g_time8_pwm_chy_handle ;  /* 推杆2 （座板）    推杆3 （靠背） TIME8 函数句柄*/
 TIM_HandleTypeDef g_time4_pwm_chy_handle ;  /* 推杆4 （脚踏旋转） 推杆5 （脚踏伸长）TIME1 函数句柄*/
 TIM_HandleTypeDef g_time12_pwm_chy_handle ;  /*推杆6 （前支撑轮） TIME12 函数句柄*/
+
 void MoterL_pwm_chy_init(uint16_t arr, uint16_t psc)  // 左轮电机
 {
     /*左右轮电机*/
@@ -258,5 +259,461 @@ void HAL_TIM_PWM_MspInit(TIM_HandleTypeDef *htim)
 }
 
 
+void MoterdriveInit(void)
+{
+    MoterL_pwm_chy_init(100 - 1, 42 - 1);    //* 84 000 000 / 100*42      L 20khz频率的PWM 波形*  /  
+	MoterR_pwm_chy_init(200 - 1, 42 - 1);    //* 168 000 000 / 200*42     R  20khz频率的PWM 波形*/
+	MoterLift_pwm_chy_init(200 - 1, 42 - 1);    //* 168 000 000 / 200*42     T1  20khz频率的PWM 波形*/
+	MoterPedestal_Backboard_pwm_chy_init(200 - 1, 42 - 1);//                   T2&T3
+	MoterLeg_pwm_chy_init(100 - 1, 42 - 1);               //                   T4&T5
+    MoterSupport_pwm_chy_init(100 - 1, 42 - 1);   //* 84 000 000 / 100*42      T6  20khz频率的PWM 波形*  /  
+}
+// 推杆测试程序
+void linearactuatorTest(void)
+{
+    // uint16_t T1_IN1 = 0;
+    // uint16_t T1_IN2 = 0;
+    // uint16_t T2_IN1 = 0;
+    // uint16_t T2_IN2 = 0;
+    // uint16_t T3_IN1 = 0;
+    // uint16_t T3_IN2 = 0;
+    // uint16_t T4_IN1 = 0;
+    // uint16_t T4_IN2 = 0;
+    // uint16_t T5_IN1 = 0;
+    // uint16_t T5_IN2 = 0;
+    // uint16_t T6_IN1 = 0;
+    // uint16_t T6_IN2 = 0;	
+    // static float acctemp=0,acct=0;
+    // static uint8_t accdoneflage=0;
+    // // if (key_scan5() == 1) 
+    // if (KeyStateRecive[3] == SEAT_LIFT)
+    // {
+    //     // 软起动 相关代码 80ms    0.5~0.9 占空比  给定
+    //     if ((acct<100) && (accdoneflage ==0))
+    //     {
+    //         acct++;
+    //         acctemp = 5.700000000000001e-10 * pow(acct,5)-1.425000000000000e-07*pow(acct,4)+9.500000000000000e-06*pow(acct,3);
+    //     }
+    //     else
+    //     {
+    //         accdoneflage = 1;
+    //         acct =0;
+    //     }
+        
+    //     T1_IN1 = 200 * (1.0 - 0);
+    //     T1_IN2 = 200 * (1.0 -acctemp);	
+    //     T2_IN1 = 200 * (1.0 - 0);
+    //     T2_IN2 = 200 * (1.0 - 0.7);	
+    //     T3_IN1 = 200 * (1.0 - 0);
+    //     T3_IN2 = 200 * (1.0 - 0.7);	
+    //     T4_IN1 = 100 * (1.0 - 0);
+    //     T4_IN2 = 100 * (1.0 - 0.7);	
+    //     T5_IN1 = 100 * (1.0 - 0);
+    //     T5_IN2 = 100 * (1.0 - 0.7);	
+    //     T6_IN1 = 100 * (1.0 - 0);
+    //     T6_IN2 = 100 * (1.0 - 0.7);	
+    //     __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
 
-	
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
+
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
+
+    //     __HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH2, T6_IN2);
+
+    // }
+
+    // // else if (key_scan1() == 1)  
+    // else if (KeyStateRecive[4] == SEAT_DROP )     
+    // {
+    //     if ((acct<100) && (accdoneflage ==0))
+    //     {
+    //         acct++;
+    //         acctemp = 2.700000000000000e-10 * pow(acct,5)-6.750000000000000e-08*pow(acct,4)+4.500000000000000e-06*pow(acct,3)+0.5;
+    //     }
+    //     else
+    //     {
+    //         accdoneflage = 1;
+    //         acct =0;
+    //     } 
+    //     T1_IN2 = 200 * (1.0 - 0);
+    //     T1_IN1 = 200 * (1.0 - acctemp);	
+    //     T2_IN2 = 200 * (1.0 - 0);
+    //     T2_IN1 = 200 * (1.0 - 0.7);	
+    //     T3_IN2 = 200 * (1.0 - 0);
+    //     T3_IN1 = 200 * (1.0 - 0.7);	
+    //     T4_IN2 = 100 * (1.0 - 0);
+    //     T4_IN1 = 100 * (1.0 - 0.7);	
+    //     T5_IN2 = 100 * (1.0 - 0);
+    //     T5_IN1 = 100 * (1.0 - 0.7);	
+    //     T6_IN2 = 100 * (1.0 - 0);
+    //     T6_IN1 = 100 * (1.0 - 0.7);		
+    //     __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
+
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
+
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
+
+    //     __HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH2, T6_IN2);
+    // }	
+    // // else if (key_scan1() == 0 && key_scan5() == 0)
+    // else if (KeyStateRecive[3]==0 && KeyStateRecive[4]==0)
+    // {
+    //     acct = 0;
+    //     accdoneflage = 0;
+    //     acctemp = 0;
+    //     T1_IN1 = 200 * (1.0 - 0); // 举升推杆
+    //     T1_IN2 = 200 * (1.0 - 0);	
+    //     T2_IN1 = 200 * (1.0 - 0); // 座板
+    //     T2_IN2 = 200 * (1.0 - 0);	
+    //     T3_IN1 = 200 * (1.0 - 0); //靠背
+    //     T3_IN2 = 200 * (1.0 - 0);	
+    //     T4_IN1 = 100 * (1.0 - 0); // 脚踏旋转
+    //     T4_IN2 = 100 * (1.0 - 0);	
+    //     T5_IN1 = 100 * (1.0 - 0); // 脚踏伸长
+    //     T5_IN2 = 100 * (1.0 - 0);	
+    //     T6_IN1 = 100 * (1.0 - 0); // 前支撑轮
+    //     T6_IN2 = 100 * (1.0 - 0);	   
+    //     __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
+
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
+
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
+
+    //     __HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH1, T6_IN1);
+    //     __HAL_TIM_SET_COMPARE(&g_time12_pwm_chy_handle, GTIM_TIM12_PWM_CH2, T6_IN2);
+
+    // }
+    // printf("acctemp:%d\t\n",T1_IN1);
+    SeatLiftDrop();
+}
+
+ /*座椅举升控制*/
+ void SeatLiftDrop(void)
+ {
+    uint16_t T1_IN1 = 0;
+    uint16_t T1_IN2 = 0;
+    uint16_t T2_IN1 = 0;
+    uint16_t T2_IN2 = 0;
+    static float acctemp=0,acct=0;
+    static uint8_t accdoneflage=0;
+
+    if (KeyStateRecive[3] == SEAT_LIFT) //|| Reg[99] ==1  )
+    {
+      // 举升软起动 相关代码
+        if ((acct<100) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 2.700000000000000e-10 * pow(acct,5)-6.750000000000000e-08*pow(acct,4)+4.500000000000000e-06*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T1_IN1 = 200 * (1.0 - 0);
+        T1_IN2 = 200 * (1.0 -acctemp);	
+        T2_IN1 = 200 * (1.0 - 0);
+        T2_IN2 = 200 * (1.0 - SEAT_LIFTDROPRATIO*acctemp);	
+    }
+    else if (KeyStateRecive[4] == SEAT_DROP )//|| Reg[99] ==2  )
+    {
+        // 下降软起动 相关代码
+
+        if ((acct<100) && (accdoneflage ==0))
+        {
+            acct++;
+             acctemp = 2.700000000000000e-10 * pow(acct,5)-6.750000000000000e-08*pow(acct,4)+4.500000000000000e-06*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T1_IN1 = 200 * (1.0 - acctemp);
+        T1_IN2 = 200 * (1.0 -0);	
+        T2_IN1 = 200 * (1.0 - SEAT_LIFTDROPRATIO*acctemp);
+        T2_IN2 = 200 * (1.0 - 0);	
+
+
+    }
+    else
+    {
+        acct = 0;
+        accdoneflage = 0;
+        acctemp = 0;
+        T1_IN1 = 200 * (1.0 - 0);
+        T1_IN2 = 200 * (1.0 -0);	
+        T2_IN1 = 200 * (1.0 - 0);
+        T2_IN2 = 200 * (1.0 - 0);	
+    }
+    __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+    __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
+
+    __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+    __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
+
+ }
+
+ /*座椅靠背控制*/	
+ void BackresetFB(void)
+ {
+    uint16_t T3_IN1 = 0;
+    uint16_t T3_IN2 = 0;
+    static float acctemp=0,acct=0;
+    static uint8_t accdoneflage=0;
+    //靠背前倾
+    if (KeyStateRecive[5] == BACKREST_FORWARD )// || Reg[100] ==1 )
+    {
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T3_IN2 = 200 * (1.0 - 0);
+        T3_IN1 = 200 * (1.0 - acctemp);	
+
+
+    }
+    //靠背后倾
+    else if (KeyStateRecive[6] == BACKREST_BACK )// || Reg[100] ==2 )
+    {
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T3_IN2 = 200 * (1.0 - acctemp);
+        T3_IN1 = 200 * (1.0 - 0);	
+
+    }
+    //靠背前后倾STOP
+    else
+    {
+        acct = 0;
+        accdoneflage = 0;
+        acctemp = 0;  
+        T3_IN2 = 0;
+        T3_IN1 = 0;	      
+    }
+     __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH1, T3_IN1);
+    __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH2, T3_IN2);
+
+ }
+
+ /*座板控制*/	
+void ThwartFB(void)
+{
+    uint16_t T2_IN1 = 0;
+    uint16_t T2_IN2 = 0;
+    static float acctemp=0,acct=0;
+    static uint8_t accdoneflage=0;
+
+    //座板前倾
+    if (0)//Reg[104] ==1 )
+    {
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T2_IN1 = 200 * (1.0 - 0);
+        T2_IN2 = 200 * (1.0 - acctemp);	
+
+
+    }
+    //座板后倾
+    else if (0)//( Reg[104] ==2 )
+    {
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T2_IN1 = 200 * (1.0 - acctemp);
+        T2_IN2 = 200 * (1.0 - 0);	
+
+    }
+    //座板前后倾STOP
+    else
+    {
+        acct = 0;
+        accdoneflage = 0;
+        acctemp = 0;  
+        T2_IN1 = 0;
+        T2_IN2 = 0;	      
+    }
+    __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH3, T2_IN1);
+    __HAL_TIM_SET_COMPARE(&g_time8_pwm_chy_handle, GTIM_TIM8_PWM_CH4, T2_IN2);
+
+}
+/*整体前后倾*/
+void OverallFB(void)
+{
+    uint16_t T1_IN1 = 0;
+    uint16_t T1_IN2 = 0;
+    static float acctemp=0,acct=0;
+    static uint8_t accdoneflage=0;
+    // 整体前倾
+    if (KeyStateRecive[7] == ALL_FORWARD)// || Reg[101] == 1 )
+    {
+       if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T1_IN1 = 200 * (1.0 - 0);
+        T1_IN2 = 200 * (1.0 - acctemp);	
+    }
+
+    // 整体后倾
+    else if (KeyStateRecive[8] ==ALL_BACK)// || Reg[101] == 2  )
+    {
+
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T1_IN1 = 200 * (1.0 - acctemp);
+        T1_IN2 = 200 * (1.0 - 0);	
+    }
+    else
+    {
+        acct = 0;
+        accdoneflage = 0;
+        acctemp = 0;  
+        T1_IN1 = 0;
+        T1_IN2 = 0;	   
+    }
+    __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH1, T1_IN1);
+    __HAL_TIM_SET_COMPARE(&g_time1_pwm_chy_handle, GTIM_TIM1_PWM_CH2, T1_IN2);
+}
+
+/*腿托上下旋转调节*/
+void LegSpinFB(void)
+{
+    uint16_t T4_IN1 = 0;
+    uint16_t T4_IN2 = 0;
+    uint16_t T5_IN1 = 0;
+    uint16_t T5_IN2 = 0;
+    static float acctemp=0,acct=0;
+    static uint8_t accdoneflage=0;
+
+    if (KeyStateRecive[9] == LEG_TOPSPIN)// || Reg[102] ==1  )
+    {
+      // 腿托上旋
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+
+        T4_IN1 = 100 * (1.0 - 0);
+        T4_IN2 = 100 * (1.0 - acctemp);	
+        T5_IN1 = 100 * (1.0 - 0);
+        T5_IN2 = 100 * (1.0 - acctemp);	
+    }
+    else if (KeyStateRecive[10] == LEG_BACKSPIN)// ||Reg[102] ==2  )
+    {
+        // 腿托下旋
+
+        if ((acct<50) && (accdoneflage ==0))
+        {
+            acct++;
+            acctemp = 8.640000000000000e-09 * pow(acct,5)-1.080000000000000e-06*pow(acct,4)+3.600000000000000e-05*pow(acct,3)+0.5;
+        }
+        else
+        {
+            accdoneflage = 1;
+            acct =0;
+        }
+        T4_IN1 = 100 * (1.0 - acctemp);
+        T4_IN2 = 100 * (1.0 - 0);	
+        T5_IN1 = 100 * (1.0 - acctemp);
+        T5_IN2 = 100 * (1.0 - 0);		
+
+
+    }
+    else
+    {
+        acct = 0;
+        accdoneflage = 0;
+        acctemp = 0;
+        T4_IN1 = 100 * (1.0 - 0);
+        T4_IN2 = 100 * (1.0 -0);	
+        T5_IN1 = 100 * (1.0 - 0);
+        T5_IN2 = 100 * (1.0 - 0);	
+    }
+        __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH3, T4_IN1);
+        __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH4, T4_IN2);			
+        __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH1, T5_IN1);
+        __HAL_TIM_SET_COMPARE(&g_time4_pwm_chy_handle, GTIM_TIM4_PWM_CH2, T5_IN2);	
+
+}
+
+
+
+void OverallStandSit()
+{
+    static float acctemp=0,acct=0;
+    static uint8_t accdoneflage=0;
+    NONE;
+}

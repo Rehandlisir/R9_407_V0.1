@@ -5,19 +5,19 @@
 
 
 /* ???? */
-#define underpan_H    0.55          /*Öá¾à*/
+#define underpan_H    0.55          /*???*/
 
-#define PI            3.1415926    /*³£ÊıPI*/
+#define PI            3.1415926    /*????PI*/
 
-#define GEAR_RATIO		29.5              /* ¼õËÙ±È */
-#define Diameter        0.354                /* ÂÖì±Ö±¾¶ 354mm  */
-#define MoterMaxr      5000.0                /*×î´ó×ªËÙ 175PRM */
-#define MoterMaxrN      175.0                /*×î´ó×ªËÙ 175PRM */
-#define KMPH_TO_MPS     0.277778             /*km/h --¡· m/s×ª»»ÏµÊı*/
-#define MPS_TO_DUTY     3.333333               /*m/s --¡· Õ¼¿Õ±È ×ª»»ÏµÊı*/
-#define MPS_TO_KMPH    0.277778             /*km/h --¡· m/s×ª»»ÏµÊı*/
+#define GEAR_RATIO		29.5              /* ????? */
+#define Diameter        0.354                /* ?????? 354mm  */
+#define MoterMaxr      5000.0                /*?????? 175PRM */
+#define MoterMaxrN      175.0                /*?????? 175PRM */
+#define KMPH_TO_MPS     0.277778             /*km/h --?? m/s??????*/
+#define MPS_TO_DUTY     3.333333               /*m/s --?? ???? ??????*/
+#define MPS_TO_KMPH    0.277778             /*km/h --?? m/s??????*/
 
-/* µØÅÌÔË¶¯×´Ì¬  */
+/* ?????????  */
 
 typedef enum
 {
@@ -32,7 +32,7 @@ typedef enum
 	turnself_right
 }RunState;
 
-typedef struct /*µ×ÅÌ¿ØÖÆÊäÈë*/
+typedef struct /*???????????*/
 {
  double adcx;
  double adcy;
@@ -41,13 +41,13 @@ typedef struct /*µ×ÅÌ¿ØÖÆÊäÈë*/
  uint8_t set_Maximum_Steespeed;
 }VELOCITY_PIn;
 
-typedef struct /*µ×ÅÌ¿ØÖÆÊä³ö*/
+typedef struct /*??????????*/
 {
-	double underpanVelocity ; /*µ×ÅÌËÙ¶È m/s */
-	double presentation_velocity; /* ÏÔÊ¾ËÙ¶ÈÔ¤Áô±äÁ¿*/
-    double theta;                /*ËÙ¶Èµ÷ÕûÒ¡¸ËÔÚ¶şÎ¬×ø±êÏµÉÏµÄÎ»ÖÃÓë¶şÎ¬×ø±êÏµµÄx ÖáµÄ½Ç¶È¦È*/
-	double acceleration_coeff;   /*¼ÓËÙÏµÊı*/
-	double steering_angle;   /*×ªÏò½Ç*/
+	double underpanVelocity ; /*??????? m/s */
+	double presentation_velocity; /* ?????????????*/
+    double theta;                /*?????????????????????ï¿½ï¿½?????????????x ??????*/
+	double acceleration_coeff;   /*???????*/
+	double steering_angle;   /*????*/
 	double L_Velocity ;      /* ????? m/s */
 	double R_Velocity ;      /* ????? m/s */
 	double L_NVelocity;      /* ???? PRM*/
@@ -62,27 +62,25 @@ typedef struct /*µ×ÅÌ¿ØÖÆÊä³ö*/
 	RunState runstate  ;   /*?????????*/
 } VELOCITY_POUT;
 
-/*ËÙ¶È¹æ»®*/
-
-/* ¶¨Òåµç»úËÙ¶ÈÇúÏßÀàĞÍÃ¶¾Ù */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ */
 typedef enum SpeedCurve {
- CURVE_NONE=0,  //Ö±Æô
- CURVE_TRAP=1,  //ÌİĞÎÇúÏß
- CURVE_SPTA=2   //SĞÍÇúÏß
+ CURVE_NONE=0,  //Ö±ï¿½ï¿½
+ CURVE_TRAP=1,  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ CURVE_SPTA=2  //Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }SpeedCurveType;
 
-/* ¶¨Òåµç»úËÙ¶ÈÇúÏß¶ÔÏó */
+/* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½ï¿½ï¿½ï¿½ß¶ï¿½ï¿½ï¿½ */
 typedef struct CurveObject {
- float startSpeed;    //¿ªÊ¼µ÷ËÙÊ±µÄ³õÊ¼ËÙ¶È
- float currentSpeed;   //µ±Ç°ËÙ¶È
- float targetSpeed;   //Ä¿±êËÙ¶È
- float stepSpeed;    //¼ÓËÙ¶È
- float speedMax;     //×î´óËÙ¶È
- float speedMin;     //×îĞ¡ËÙ¶È
- uint32_t aTimes;    //µ÷ËÙÊ±¼ä
- uint32_t maxTimes;   //µ÷ËÙ¿ç¶È
- SpeedCurveType curveMode;  //ÇúÏßÀàĞÍ
- float flexible;     //SÇúÏßÀ­Éì¶È
+ float startSpeed;    //ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½Ê±ï¿½Ä³ï¿½Ê¼ï¿½Ù¶ï¿½
+ float currentSpeed;   //ï¿½ï¿½Ç°ï¿½Ù¶ï¿½
+ float targetSpeed;   //Ä¿ï¿½ï¿½ï¿½Ù¶ï¿½
+ float stepSpeed   ;    //ï¿½ï¿½ï¿½Ù¶ï¿½
+ float speedMax;     //ï¿½ï¿½ï¿½ï¿½Ù¶ï¿½
+ float speedMin;     //ï¿½ï¿½Ğ¡ï¿½Ù¶ï¿½
+ uint32_t aTimes;    //ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½
+ uint32_t maxTimes;   //ï¿½ï¿½ï¿½Ù¿ï¿½ï¿½
+ SpeedCurveType curveMode;  //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+ float flexible;     //Sï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 }CurveObjectType;
 
 int32_t  Value_Resetzero(int32_t min_value ,int32_t current_value ,int32_t max_value);

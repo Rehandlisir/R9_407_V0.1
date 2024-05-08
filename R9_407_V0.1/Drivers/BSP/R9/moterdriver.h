@@ -25,6 +25,9 @@
 #define __MOTERDRIVER_H
 
 #include "./SYSTEM/sys/sys.h"
+#include "./BSP/R9/Hostmodbus.h"
+#include "./BSP/R9/Slavemodbus.h"
+#include "math.h"
 
 /*********************************以下是通用定时器PWM输出实验相关宏定义*************************************/
 
@@ -91,9 +94,9 @@
 
 /*底盘R 电机2驱动输出 TIME9 */
 /* TIMX REMAP设置* 开启TIM9的重映射功能, 将TIM9_CH1  TIM9_CH2 输出到PE5 PE6 上*/
-#define GTIM_TIM9_PWM_CHY_GPIO_PORTE   GPIOE
-#define GTIM_TIM9_PWM_CHY_GPIO_PIN5    GPIO_PIN_5
-#define GTIM_TIM9_PWM_CHY_GPIO_PIN6    GPIO_PIN_6
+#define GTIM_TIM9_PWM_CHY_GPIO_PORTE GPIOE
+#define GTIM_TIM9_PWM_CHY_GPIO_PIN5 GPIO_PIN_5
+#define GTIM_TIM9_PWM_CHY_GPIO_PIN6 GPIO_PIN_6
 #define GTIM_TIM9_PWM TIM9						/* TIM9 */
 #define GTIM_TIM9_PWM_CH1 TIM_CHANNEL_1			/* 通道Y,  1<= Y <=2 */
 #define GTIM_TIM9_PWM_CH2 TIM_CHANNEL_2			/* 通道Y,  1<= Y <=2 */
@@ -216,12 +219,41 @@
 	{                                   \
 		__HAL_RCC_TIM12_CLK_ENABLE();   \
 	} while (0) /* TIM12 时钟使能 */
+/*姿态指令控制宏定义*/
+#define NONE 0
+#define STANCE 1
+#define SITTING 2
+#define SEAT_LIFT 3
+#define SEAT_DROP 4
+#define BACKREST_FORWARD 5
+#define BACKREST_BACK 6
+#define ALL_FORWARD 7
+#define ALL_BACK 8
+#define LEG_TOPSPIN 9
+#define LEG_BACKSPIN 10
+#define SEAT_LIFTDROPRATIO 0.819   // 座板角度B2/B1底盘举升
 
-void  MoterL_pwm_chy_init(uint16_t arr, uint16_t psc);  // 左轮电机
-void  MoterR_pwm_chy_init(uint16_t arr, uint16_t psc); // 右轮电机
-void  MoterLift_pwm_chy_init(uint16_t arr, uint16_t psc); // 电动推杆 1 
-void  MoterPedestal_Backboard_pwm_chy_init(uint16_t arr, uint16_t psc); // 电动推杆 2&3 
-void  MoterLeg_pwm_chy_init(uint16_t arr, uint16_t psc); // 电动推杆 4&5 
-void  MoterSupport_pwm_chy_init(uint16_t arr, uint16_t psc); // 电动推杆 6 
+/*************************电机驱动变量*****************************/
+extern TIM_HandleTypeDef g_time5_pwm_chy_handle;  /* 底盘L电机 1 函数句柄*/
+extern TIM_HandleTypeDef g_time9_pwm_chy_handle;  /* 底盘R电机 2 函数句柄*/
+extern TIM_HandleTypeDef g_time1_pwm_chy_handle;  /* 推杆1 （举升）  TIME1 函数句柄*/
+extern TIM_HandleTypeDef g_time8_pwm_chy_handle;  /* 推杆2 （座板）    推杆3 （靠背） TIME8 函数句柄*/
+extern TIM_HandleTypeDef g_time4_pwm_chy_handle;  /* 推杆4 （脚踏旋转） 推杆5 （脚踏伸长）TIME1 函数句柄*/
+extern TIM_HandleTypeDef g_time12_pwm_chy_handle; /*推杆6 （前支撑轮） TIME12 函数句柄*/
+//extern SlAVEKEYSTATE slavekeystate ;
 
+void MoterL_pwm_chy_init(uint16_t arr, uint16_t psc);				   // 左轮电机
+void MoterR_pwm_chy_init(uint16_t arr, uint16_t psc);				   // 右轮电机
+void MoterLift_pwm_chy_init(uint16_t arr, uint16_t psc);			   // 电动推杆 1
+void MoterPedestal_Backboard_pwm_chy_init(uint16_t arr, uint16_t psc); // 电动推杆 2&3
+void MoterLeg_pwm_chy_init(uint16_t arr, uint16_t psc);				   // 电动推杆 4&5
+void MoterSupport_pwm_chy_init(uint16_t arr, uint16_t psc);			   // 电动推杆 6
+void MoterdriveInit(void);
+void linearactuatorTest(void);
+void SeatLiftDrop(void);
+void BackresetFB(void);
+void ThwartFB(void);
+void OverallFB(void);
+void LegSpinFB(void);
+void OverallStandSit(void);
 #endif

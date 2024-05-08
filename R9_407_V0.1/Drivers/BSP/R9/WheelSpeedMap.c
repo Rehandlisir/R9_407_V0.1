@@ -118,6 +118,22 @@ void velocity_maping(VELOCITY_PIn velPlanIn)
 	velocity_pout.L_Dutycycle = Value_limit(0, velocity_pout.L_Dutycycle, 1);
 	velocity_pout.R_Dutycycle = Value_limit(0, velocity_pout.R_Dutycycle, 1);
 	/*待补充占空比曲线规划*/
+	// CurveObjectType L_curve;
+	// CurveObjectType R_curve;
+	// L_curve.curveMode = CURVE_SPTA;
+    // L_curve.startSpeed = 0.5;
+	// L_curve.targetSpeed = velocity_pout.L_Dutycycle ;
+	// L_curve.stepSpeed = 1.0;
+	// L_curve.speedMax = 1.0;
+	// L_curve.speedMin = 0;
+	// L_curve.aTimes = 1;
+	// L_curve.maxTimes =100 ;
+	// L_curve.flexible = 2;
+	// MotorVelocityCurve (&L_curve);
+
+    // printf("L_curve.currentSpeed : %f\r\n",L_curve.currentSpeed);
+
+
 	switch (drivestate)
 	{
 		case idle:
@@ -284,4 +300,3 @@ static void CalCurveSPTA(CurveObjectType *spta)
 		spta->currentSpeed=spta->speedMin;
 	}
 }
-

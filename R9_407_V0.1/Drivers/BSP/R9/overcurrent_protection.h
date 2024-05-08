@@ -51,6 +51,6 @@
 void dcurrentpro_init(void);
 				  
 void tcurrentpro_init(void);
-
+void currentproInit(void);
 #endif
 

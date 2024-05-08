@@ -68,3 +68,6 @@
 ..\..\output\moterdriver.o: ..\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h
 ..\..\output\moterdriver.o: ..\..\Drivers\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h
 ..\..\output\moterdriver.o: ..\..\Drivers\CMSIS\Include\core_cm4.h
+..\..\output\moterdriver.o: ..\..\Drivers\./BSP/R9/Hostmodbus.h
+..\..\output\moterdriver.o: ..\..\Drivers\./BSP/R9/Slavemodbus.h
+..\..\output\moterdriver.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h

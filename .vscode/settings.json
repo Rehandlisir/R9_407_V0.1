@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "task.h": "c",
+        "sys.h": "c",
+        "math.h": "c",
+        "slavemodbus.h": "c",
+        "moterdriver.h": "c",
+        "hostmodbus.h": "c",
+        "delay.h": "c"
+    },
+    "C_Cpp.errorSquiggles": "disabled"
+}

@@ -76,6 +76,9 @@
 ..\..\output\task.o: ..\..\Drivers\./BSP/BEEP/beep.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/R9/underpanControl.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/R9/moterdriver.h
+..\..\output\task.o: ..\..\Drivers\./BSP/R9/Hostmodbus.h
+..\..\output\task.o: ..\..\Drivers\./BSP/R9/Slavemodbus.h
+..\..\output\task.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\math.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/R9/brake.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/TIMER/btim.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/Common/common.h
@@ -87,5 +90,4 @@
 ..\..\output\task.o: ..\..\Drivers\./BSP/R9/inv_mpu_dmp_motion_driver.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/R9/rs485.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/R9/mlx90393.h
-..\..\output\task.o: ..\..\Drivers\./BSP/R9/Slavemodbus.h
 ..\..\output\task.o: ..\..\Drivers\./BSP/WDG/wdg.h

@@ -5,38 +5,40 @@
 #include "./SYSTEM/sys/sys.h"
 
 
-/******************************************************************************************/
-/* Modbus Òı½Å ºÍ ´®¿Ú ¶¨Òå 
- * Ä¬ÈÏÊÇÕë¶ÔModbus2µÄ.
- * ×¢Òâ: Í¨¹ıĞŞ¸ÄÕâ10¸öºê¶¨Òå, ¿ÉÒÔÖ§³ÖUART1~UART7ÈÎÒâÒ»¸ö´®¿Ú.
- */
-#define HostModbus_RE_GPIO_PORT                  GPIOG
-#define HostModbus_RE_GPIO_PIN                   GPIO_PIN_8
-#define HostModbus_RE_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOG_CLK_ENABLE(); }while(0)   /*  */
-
-#define HostModbus_TX_GPIO_PORT                  GPIOA
-#define HostModbus_TX_GPIO_PIN                   GPIO_PIN_2
-#define HostModbus_TX_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOA_CLK_ENABLE(); }while(0)   /*  */
-
-#define HostModbus_RX_GPIO_PORT                  GPIOA
-#define HostModbus_RX_GPIO_PIN                   GPIO_PIN_3
-#define HostModbus_RX_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOA_CLK_ENABLE(); }while(0)   /* */
-
-#define HostModbus_UX                            UART5
-#define HostModbus_UX_IRQn                       UART5_IRQn
-#define HostModbusKey_UX_IRQHandler              UART5_IRQHandler
-#define HostModbus_UX_CLK_ENABLE()               do{ __HAL_RCC_UART5_CLK_ENABLE(); }while(0)  /* USART6 Ê±ÖÓÊ¹ÄÜ */
 
 
 /******************************************************************************************/
-
-/* ¿ØÖÆModbus_RE½Å, ¿ØÖÆModbus·¢ËÍ/½ÓÊÕ×´Ì¬
- * Modbus_RE = 0, ½øÈë½ÓÊÕÄ£Ê½
- * Modbus_RE = 1, ½øÈë·¢ËÍÄ£Ê½
+/* Modbus å¼•è„š å’Œ ä¸²å£ å®šä¹‰ 
+ * é»˜è®¤æ˜¯é’ˆå¯¹Modbus2çš„.
+ * æ³¨æ„: é€šè¿‡ä¿®æ”¹è¿™10ä¸ªå®å®šä¹‰, å¯ä»¥æ”¯æŒUART1~UART7ä»»æ„ä¸€ä¸ªä¸²å£.
  */
-#define HostModbus_RE(x)   do{ x ? \
-                          HAL_GPIO_WritePin(HostModbus_RE_GPIO_PORT, HostModbus_RE_GPIO_PIN, GPIO_PIN_SET) : \
-                          HAL_GPIO_WritePin(HostModbus_RE_GPIO_PORT, HostModbus_RE_GPIO_PIN, GPIO_PIN_RESET); \
+#define Modbus_RE_GPIO_PORT                  GPIOF
+#define Modbus_RE_GPIO_PIN                   GPIO_PIN_12
+#define Modbus_RE_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOF_CLK_ENABLE(); }while(0)   /*  */
+
+#define Modbus_TX_GPIO_PORT                  GPIOD
+#define Modbus_TX_GPIO_PIN                   GPIO_PIN_5
+#define Modbus_TX_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOD_CLK_ENABLE(); }while(0)   /*  */
+
+#define Modbus_RX_GPIO_PORT                  GPIOD
+#define Modbus_RX_GPIO_PIN                   GPIO_PIN_6
+#define Modbus_RX_GPIO_CLK_ENABLE()          do{ __HAL_RCC_GPIOA_CLK_ENABLE(); }while(0)   /* */
+
+#define Modbus_UX                            USART2
+#define Modbus_UX_IRQn                       USART2_IRQn
+#define ModbusKey_UX_IRQHandler              USART2_IRQHandler
+#define Modbus_UX_CLK_ENABLE()               do{ __HAL_RCC_USART2_CLK_ENABLE(); }while(0)  /* USART2æ—¶é’Ÿä½¿èƒ½ */
+
+
+/******************************************************************************************/
+
+/* æ§åˆ¶Modbus_REè„š, æ§åˆ¶Modbuså‘é€/æ¥æ”¶çŠ¶æ€
+ * Modbus_RE = 0, è¿›å…¥æ¥æ”¶æ¨¡å¼
+ * Modbus_RE = 1, è¿›å…¥å‘é€æ¨¡å¼
+ */
+#define Modbus_RE(x)   do{ x ? \
+                          HAL_GPIO_WritePin(Modbus_RE_GPIO_PORT, Modbus_RE_GPIO_PIN, GPIO_PIN_SET) : \
+                          HAL_GPIO_WritePin(Modbus_RE_GPIO_PORT, Modbus_RE_GPIO_PIN, GPIO_PIN_RESET); \
                       }while(0)
 
 
@@ -45,51 +47,43 @@
 /******************************************************************************************/					  
 typedef struct 
 {
-	//×÷Îª´Ó»úÊ±Ê¹ÓÃ
-	uint8_t  myadd;        //±¾Éè±¸´Ó»úµØÖ·
-	uint8_t  rcbuf[100];   //modbus½ÓÊÜ»º³åÇø
-	uint8_t  timout;       //modbusÊı¾İ³ÖĞøÊ±¼ä
-	uint8_t  recount;      //modbus¶Ë¿Ú½ÓÊÕµ½µÄÊı¾İ¸öÊı
-	uint8_t  timrun;       //modbus¶¨Ê±Æ÷ÊÇ·ñ¼ÆÊ±±êÖ¾
-	uint8_t  reflag;       //modbusÒ»Ö¡Êı¾İ½ÓÊÜÍê³É±êÖ¾Î»
-	uint8_t  sendbuf[100]; //modbus½Ó·¢ËÍ»º³åÇø
+	//ä½œä¸ºä»æœºæ—¶ä½¿ç”¨
+	uint8_t  myadd;        //æœ¬è®¾å¤‡ä»æœºåœ°å€
+	uint8_t  rcbuf[100];   //modbusæ¥å—ç¼“å†²åŒº
+	uint8_t  timout;       //modbusæ•°æ®æŒç»­æ—¶é—´
+	uint8_t  recount;      //modbusç«¯å£æ¥æ”¶åˆ°çš„æ•°æ®ä¸ªæ•°
+	uint8_t  timrun;       //modbuså®šæ—¶å™¨æ˜¯å¦è®¡æ—¶æ ‡å¿—
+	uint8_t  reflag;       //modbusä¸€å¸§æ•°æ®æ¥å—å®Œæˆæ ‡å¿—ä½
+	uint8_t  sendbuf[100]; //modbusæ¥å‘é€ç¼“å†²åŒº
 	
-	//×÷ÎªÖ÷»úÌí¼Ó²¿·Ö
-	uint8_t Host_Txbuf[8];	//modbus·¢ËÍÊı×é	
-	uint8_t slave_add;		//ÒªÆ¥ÅäµÄ´Ó»úÉè±¸µØÖ·£¨×öÖ÷»úÊµÑéÊ±Ê¹ÓÃ£©
-	uint8_t Host_send_flag;//Ö÷»úÉè±¸·¢ËÍÊı¾İÍê±Ï±êÖ¾Î»
-	int Host_Sendtime;//·¢ËÍÍêÒ»Ö¡Êı¾İºóÊ±¼ä¼ÆÊı
-	uint8_t Host_time_flag;//·¢ËÍÊ±¼äµ½±êÖ¾Î»£¬=1±íÊ¾µ½·¢ËÍÊı¾İÊ±¼äÁË
-	uint8_t Host_End;//½ÓÊÕÊı¾İºó´¦ÀíÍê±Ï	
+	//ä½œä¸ºä¸»æœºæ·»åŠ éƒ¨åˆ†
+	uint8_t Host_Txbuf[8];	//modbuså‘é€æ•°ç»„	
+	uint8_t slave_add;		//è¦åŒ¹é…çš„ä»æœºè®¾å¤‡åœ°å€ï¼ˆåšä¸»æœºå®éªŒæ—¶ä½¿ç”¨ï¼‰
+	uint8_t Host_send_flag;//ä¸»æœºè®¾å¤‡å‘é€æ•°æ®å®Œæ¯•æ ‡å¿—ä½
+	int Host_Sendtime;//å‘é€å®Œä¸€å¸§æ•°æ®åæ—¶é—´è®¡æ•°
+	uint8_t Host_time_flag;//å‘é€æ—¶é—´åˆ°æ ‡å¿—ä½ï¼Œ=1è¡¨ç¤ºåˆ°å‘é€æ•°æ®æ—¶é—´äº†
+	uint8_t Host_End;//æ¥æ”¶æ•°æ®åå¤„ç†å®Œæ¯•	
 	
-}HOSTMODBUS;
+}MODBUS;
 
-extern HOSTMODBUS hostmodbus;
-extern uint16_t Host06Recive[100];
+extern MODBUS modbus;
+extern uint16_t KeyReg[];
 
-extern uint16_t Host03Recive[100];
+extern uint16_t KeyStateRecive[200];
 
-
+void Host_ModbusKeyUART2_init(uint32_t baudrate);
+void Host_Modbuskey_send_data(uint8_t *buf, uint8_t len);
+void Host_Modbuskey_Init(void);
+uint16_t  Host_Modbuskey_CRC16( uint8_t *puchMsg, uint16_t usDataLen );
 // Host
-void HostModbusKeyUART_init(uint32_t baudrate);
-void HostModbuskey_send_data(uint8_t *buf, uint8_t len);
-void HostModbuskey_Init(void);
-uint16_t  Modbuskey_CRC16( uint8_t *puchMsg, uint16_t usDataLen );
+void Host_Read03_slave(uint8_t slave,uint16_t StartAddr,uint16_t num);
 
-void Host_Send03_slave(uint8_t slave,uint16_t StartAddr,uint16_t num);
+void Host_Func3(void);
 
-void Host_ReceiveFunc3();
-
-void HOST_ModbusRX();
+void HOST_ModbusRX(void);
 
 void Host_write06_slave(uint8_t slave,uint8_t fun,uint16_t StartAddr,uint16_t num);
 
-void Host_Func6Back();
+void Host_Func6(void);
 #endif
  
-
-
-
-
-
-

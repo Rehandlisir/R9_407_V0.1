@@ -43,3 +43,8 @@ void tcurrentpro_init(void)
     // HAL_GPIO_Init(T_MOTOR_PROTECT_GPIO_PORT, &gpio_init_struct);                               
 	// T_MOTOR_PROTECT(1);    // 默认不过流                                             
 }
+void currentproInit(void)
+{
+    dcurrentpro_init();                     /*过流保护初始化*/
+	tcurrentpro_init();
+}
