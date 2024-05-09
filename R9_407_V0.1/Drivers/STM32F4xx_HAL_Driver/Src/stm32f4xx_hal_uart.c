@@ -1129,6 +1129,7 @@ HAL_StatusTypeDef HAL_UART_UnRegisterRxEventCallback(UART_HandleTypeDef *huart)
   * @param  Size  Amount of data elements (u8 or u16) to be sent
   * @param  Timeout Timeout duration
   * @retval HAL status
+  HAL_UART_Transmit(&g_modbus_handler, buf, len, 1000);
   */
 HAL_StatusTypeDef HAL_UART_Transmit(UART_HandleTypeDef *huart, uint8_t *pData, uint16_t Size, uint32_t Timeout)
 {

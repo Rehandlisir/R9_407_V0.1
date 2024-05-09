@@ -219,14 +219,15 @@ void Tmxl90393(void)
 	// mlx_xdata = mlxdata.xdata-16800;
 	// mlx_ydata = mlxdata.ydata-16500;  
 	// printf("%d,%d\r\n",mlx_xdata,mlx_ydata);
-	Host_write06_slave(0x11,0x06,0x0091,0X02);
-	if(modbus.Host_send_flag)
-	{
-		modbus.Host_Sendtime=0;//发送完毕后计数清零（距离上次的时间）
-		modbus.Host_time_flag=0;//发送数据标志位清零
-		modbus.Host_send_flag=0;//清空发送结束数据标志位
-		Host_Func6();//从机返回数据处理
-	}  
+	
+		Host_write06_slave(0x11,0x06,0x0091,0X02);
+		if(modbus.Host_send_flag)
+		{
+			modbus.Host_Sendtime=0;//发送完毕后计数清零（距离上次的时间）
+			modbus.Host_time_flag=0;//发送数据标志位清零
+			modbus.Host_send_flag=0;//清空发送结束数据标志位
+			Host_Func6();//从机返回数据处理
+		}  
 }
 
 

@@ -11,7 +11,7 @@ struct TaskStruct TaskST[]=
 	 { 0,       300,            0,		  	           LedFlash},
 	 { 0,       500,            0,                      Beep_run},
 	 { 0,       2,            0,                      DypA21}, // 150 ms ‘À––Œ»∂®
-	 { 0,       100,              0,                      Tmxl90393},
+	 { 0,       200,              0,                      Tmxl90393},
 	 
 };
 

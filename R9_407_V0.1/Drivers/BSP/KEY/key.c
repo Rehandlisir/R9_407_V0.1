@@ -134,7 +134,7 @@ uint8_t key_scan1(void)
 {
     if(KEY1 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY1== 0)
         {
            // while(KEY_T1PUSH == 0);  /* 等待按键松开 */
@@ -153,7 +153,7 @@ uint8_t key_scan2(void)
 {
     if(KEY2 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY2== 0)
         {
             while(KEY2 == 0);  /* 等待按键松开 */
@@ -171,7 +171,7 @@ uint8_t key_scan3(void)
 {
     if(KEY3 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY3== 0)
         {
             while(KEY3 == 0);  /* 等待按键松开 */
@@ -190,7 +190,7 @@ uint8_t key_scan4(void)
 {
     if(KEY4 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY4== 0)
         {
             while(KEY4 == 0);  /* 等待按键松开 */
@@ -208,7 +208,7 @@ uint8_t key_scan5(void)
 {
     if(KEY5 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY5== 0)
         {
             //while(KEY_T1PUSH == 0);  /* 等待按键松开 */
@@ -226,7 +226,7 @@ uint8_t key_scan6(void)
 {
     if(KEY6 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY6== 0)
         {
             while(KEY6 == 0);  /* 等待按键松开 */
@@ -244,7 +244,7 @@ uint8_t key_scan7(void)
 {
     if(KEY7 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY7== 0)
         {
             //while(KEY7 == 0);  /* 等待按键松开 */
@@ -262,7 +262,7 @@ uint8_t key_scan8(void)
 {
     if(KEY8 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY8== 0)
         {
             while(KEY8 == 0);  /* 等待按键松开 */
@@ -280,7 +280,7 @@ uint8_t key_scan9(void)
 {
     if(KEY9 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY9== 0)
         {
             while(KEY9 == 0);  /* 等待按键松开 */
@@ -298,7 +298,7 @@ uint8_t key_scan10(void)
 {
     if(KEY10 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY10== 0)
         {
             //while(KEY10 == 0);  /* 等待按键松开 */
@@ -316,7 +316,7 @@ uint8_t key_scan11(void)
 {
     if(KEY11 == 0)
     {
-        delay_ms(20);   /* 消抖 */
+        delay_ms(10);   /* 消抖 */
         if(KEY11== 0)
         {
             while(KEY11 == 0);  /* 等待按键松开 */
